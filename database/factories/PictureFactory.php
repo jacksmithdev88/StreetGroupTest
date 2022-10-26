@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-
 class PictureFactory extends Factory
 {
     /**

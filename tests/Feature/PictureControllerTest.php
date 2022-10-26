@@ -50,7 +50,7 @@ class PictureControllerTest extends TestCase
             'image' => $file,
             'name' => 'Lassie'
         ]);
-        
+
         $response->assertStatus(302);
         $response->assertRedirect('/');
 
@@ -62,8 +62,17 @@ class PictureControllerTest extends TestCase
         $this->assertFileExists(storage_path('app/public/' . $file->hashName()));
     }
 
-    // public function test_upvote_a_dog()
-    // {
+    public function test_upvote_a_dog()
+    {
+        $dog = Picture::create([
+            'name' => 'test name',
+            'file_path' => 'dog.jpg',
+        ]);
+        $dog->votes = 10;
+        $dog->save();
 
-    // }
+        $this->post("/pictures/1/upvote");
+        $response = $this->get('/');
+        $response->assertSee('11 votes');
+    }
 }

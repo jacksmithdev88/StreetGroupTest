@@ -38,7 +38,18 @@ class PictureController extends Controller
      */
     public function store(Request $request)
     {
-        // See PictureControllerTest to see what this should do
+        $validated = $this->validate($request, [
+            'image' => 'required|image',
+            'name'  => 'required'
+        ]);
+
+        $picture = new Picture();
+        $picture->name = $request->name;
+        $picture->file_path = $request->file('image')->hashName();
+        $picture->save();
+
+        Storage::disk('local')->put('public/', $request->file('image'));
+        return redirect('/');
     }
 
     /**
@@ -49,6 +60,8 @@ class PictureController extends Controller
      */
     public function upvote(Request $request, Picture $picture)
     {
-        
+        $picture->votes++;
+        $picture->save();
+        return redirect('/');
     }
 }
