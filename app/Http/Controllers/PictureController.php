@@ -40,7 +40,7 @@ class PictureController extends Controller
     {
         $validated = $this->validate($request, [
             'image' => 'required|image',
-            'name'  => 'required|alpha'
+            'name'  => 'required'
         ]);
 
         $picture = new Picture();
